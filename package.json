@@ -5,8 +5,11 @@
     "main": "server.js",
     "scripts": {
         "tsc": "tsc",
-        "dev": "ts-node-dev --respawn --transpileOnly ./server.ts",
-        "prod": "tsc && node ./build/app.js",
+        "dev-client": "cd client && npm run start",
+        "dev-server": "ts-node-dev --respawn --transpileOnly ./server.ts",
+        "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\"",
+        "prod-prebuild": "npm run install && cd client && npm run install",
+        "prod-build": "tsc && cd client && npm run build && npm run build-storybook",
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -29,6 +32,7 @@
         "@types/express": "^4.17.6",
         "@typescript-eslint/eslint-plugin": "^3.3.0",
         "@typescript-eslint/parser": "^3.3.0",
+        "concurrently": "^5.2.0",
         "eslint": "^7.3.0",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-prettier": "^3.1.4",
