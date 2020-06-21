@@ -4,6 +4,7 @@
   "description": "swap plants online",
   "main": "server.js",
   "scripts": {
+    "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/hauptdigital/plants4friends/issues"
   },
-  "homepage": "https://github.com/hauptdigital/plants4friends#readme"
+  "homepage": "https://github.com/hauptdigital/plants4friends#readme",
+  "dependencies": {
+    "typescript": "^3.9.5"
+  }
 }
