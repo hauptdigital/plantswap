@@ -7,8 +7,9 @@
         "tsc": "tsc",
         "test": "jest",
         "dev-client": "cd client && npm run start",
+        "dev-storybook": "cd client && npm run storybook",
         "dev-server": "ts-node-dev --respawn --transpileOnly ./src/server.ts",
-        "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\"",
+        "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\" \"npm run dev-storybook\"",
         "prod-prebuild": "npm run install && cd client && npm run install",
         "prod-build": "tsc && cd client && npm run build && npm run build-storybook",
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet"
