@@ -1,0 +1,19 @@
+{
+  "name": "plants4friends",
+  "version": "1.0.0",
+  "description": "swap plants online",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hauptdigital/plants4friends.git"
+  },
+  "author": "Marc Haupt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hauptdigital/plants4friends/issues"
+  },
+  "homepage": "https://github.com/hauptdigital/plants4friends#readme"
+}
