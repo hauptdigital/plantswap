@@ -7,6 +7,7 @@
         "tsc": "tsc",
         "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
         "prod": "tsc && node ./build/app.js",
+        "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
