@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 
-function Menu() {
+const Menu = () => {
     return (
         <>
             <Search />
@@ -12,6 +12,6 @@ function Menu() {
             <Link to={'/Profile'}>Mein Profil</Link>
         </>
     );
-}
+};
 
 export default Menu;

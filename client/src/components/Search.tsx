@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Search() {
+const Search = () => {
     return (
         <div>
             <input type="search" />
         </div>
     );
-}
+};
 
 export default Search;

@@ -7,11 +7,11 @@ const Wrapper = styled.div`
 `;
 
 interface ContainerProps {
-    children: any;
+    children: React.ReactNode;
 }
 
-function Container(props: ContainerProps) {
+const Container = (props: ContainerProps) => {
     return <Wrapper>{props.children}</Wrapper>;
-}
+};
 
 export default Container;
