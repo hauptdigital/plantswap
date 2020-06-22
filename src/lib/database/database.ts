@@ -1,15 +1,15 @@
-import * as mongodb from 'mongodb';
+import mongoose = require('mongoose');
 
 let client: any = null;
 let database: any = null;
 
-export async function initDatabase(url: string, databaseName: string) {
-    client = new mongodb.MongoClient(url, {
+export async function initDatabase(url: string) {
+    client = await mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    await client.connect();
-    database = client.db(databaseName);
+
+    database = mongoose.connection;
 }
 
 export async function getCollection(collectionName: string) {
