@@ -3,7 +3,7 @@ import * as mongodb from 'mongodb';
 let client: any = null;
 let database: any = null;
 
-export async function initDatabase(url: string | undefined, databaseName: string | undefined) {
+export async function initDatabase(url: string, databaseName: string) {
     client = new mongodb.MongoClient(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
