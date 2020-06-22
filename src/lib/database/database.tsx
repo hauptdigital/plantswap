@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 let client: any = null;
 let database: any = null;
 
-async function initDatabase(url: string, databaseName: string) {
+export async function initDatabase(url: string | undefined, databaseName: string | undefined) {
     client = new MongoClient(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -12,9 +12,6 @@ async function initDatabase(url: string, databaseName: string) {
     database = client.db(databaseName);
 }
 
-async function closeDatabase() {
+export async function closeDatabase() {
     await client.close();
 }
-
-exports.initDatabase = initDatabase;
-exports.closeDatabase = closeDatabase;

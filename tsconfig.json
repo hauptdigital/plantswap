@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         /* Basic Options */
-        "target": "es5",
-        "module": "commonjs",
+        "target": "ESNext",
+        "module": "CommonJS",
         "outDir": "./build",
         "jsx": "react",
 
