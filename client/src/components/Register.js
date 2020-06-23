@@ -4,12 +4,9 @@ import Input from './Input';
 import Button from './Button';
 
 const Register = ({ title }) => {
-    const [accountData, setAccountData] = React.useState({ accountName: '', email: '', password: '' });
-
-    function handleChange(event) {
-        accountData[event.target.name] = event.target.value;
-        setAccountData(accountData);
-    }
+    const [accountName, setAccountName] = React.useState('');
+    const [accountEmail, setAccountEmail] = React.useState('');
+    const [accountPassword, setAccountPassword] = React.useState('');
 
     return (
         <Form>
@@ -18,16 +15,22 @@ const Register = ({ title }) => {
                 type="text"
                 name="accountName"
                 placeholder="Mitgliedsname"
-                value={accountData.accountName}
-                onChange={handleChange}
+                value={accountName}
+                onChange={(event) => setAccountName(event.target.value)}
             />
-            <Input type="mail" name="email" placeholder="E-Mail" value={accountData.email} onChange={handleChange} />
+            <Input
+                type="mail"
+                name="email"
+                placeholder="E-Mail"
+                value={accountEmail}
+                onChange={(event) => setAccountEmail(event.target.value)}
+            />
             <Input
                 type="password"
                 name="password"
                 placeholder="Passwort"
-                value={accountData.password}
-                onChange={handleChange}
+                value={accountPassword}
+                onChange={(event) => setAccountPassword(event.target.value)}
             />
             <Button>Registrieren</Button>
         </Form>
