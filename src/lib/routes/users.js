@@ -1,9 +1,9 @@
-import { Request, Response, Router } from 'express';
-import { registerUser } from '../models/users';
+const { Request, Response, Router } = require('express');
+const { registerUser } = require('../models/users');
 
 const router = Router();
 
-router.post('/', async (request: Request, response: Response) => {
+router.post('/', async (request, response) => {
     try {
         const id = await registerUser(request.body);
         return response.json(id);

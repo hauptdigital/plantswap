@@ -1,4 +1,4 @@
-import mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
@@ -15,10 +15,12 @@ userSchema.methods.encrypt = function () {
 
 const User = mongoose.model('User', userSchema);
 
-export async function registerUser(userData: Record<string, unknown>) {
+async function registerUser(userData) {
     const user = new User(userData);
 
     // Create new user
     const result = await user.save();
     return result._id;
 }
+
+module.exports.registerUser = registerUser;

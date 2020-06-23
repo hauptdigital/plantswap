@@ -1,4 +1,4 @@
-const theme: Record<string, unknown> = {
+const theme = {
     colors: {
         background: {
             primary: 'teal',

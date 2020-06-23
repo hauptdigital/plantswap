@@ -1,9 +1,9 @@
-import mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-let client: any = null;
-let database: any = null;
+let client = null;
+let database = null;
 
-export async function initDatabase(url: string) {
+async function initDatabase(url) {
     client = await mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -12,13 +12,17 @@ export async function initDatabase(url: string) {
     database = mongoose.connection;
 }
 
-export async function getCollection(collectionName: string) {
+async function getCollection(collectionName) {
     if (!database) {
         throw new Error('You have to initialize the database first');
     }
     return database.collection(collectionName);
 }
 
-export async function closeDatabase() {
+async function closeDatabase() {
     await client.close();
 }
+
+module.exports.initDatabase = initDatabase;
+module.exports.getCollection = getCollection;
+module.exports.closeDatabase = closeDatabase;

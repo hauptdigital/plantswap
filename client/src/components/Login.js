@@ -3,11 +3,7 @@ import Form from './Form';
 import Input from './Input';
 import Button from './Button';
 
-type LoginProps = {
-    title: string;
-};
-
-const Login: React.FunctionComponent<LoginProps> = ({ title }) => (
+const Login = ({ title }) => (
     <Form>
         {title}
         <Input type="text" placeholder="Mitgliedsname oder E-Mail" />
