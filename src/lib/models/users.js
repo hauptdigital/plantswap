@@ -4,7 +4,7 @@ const { validateEmail } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema(
     {
-        accountName: {
+        userName: {
             type: String,
             minlength: [3, 'Username must be at least 3 characters.'],
             maxlength: [20, 'Username must be less than 20 characters.'],

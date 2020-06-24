@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const path = require('path');
 const { initDatabase } = require('./src/lib/database/database');
 const users = require('./src/lib/routes/users');
 
@@ -15,10 +16,6 @@ app.use(express.json());
 
 // Setup api endpoints
 app.use('/api/users', users);
-
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
 
 initDatabase(databaseURL).then(async () => {
     console.log(`Database ${databaseURL} is ready`);

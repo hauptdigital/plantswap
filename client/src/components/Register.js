@@ -2,37 +2,45 @@ import React from 'react';
 import Form from './Form';
 import Input from './Input';
 import Button from './Button';
+import { registerUser } from '../api/users';
 
 const Register = ({ title }) => {
-    const [accountName, setAccountName] = React.useState('');
-    const [accountEmail, setAccountEmail] = React.useState('');
-    const [accountPassword, setAccountPassword] = React.useState('');
+    const [userName, setUserName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    async function handleButtonClick(user) {
+        const newUserId = await registerUser(user);
+        console.log(newUserId);
+    }
 
     return (
         <Form>
             {title}
             <Input
                 type="text"
-                name="accountName"
+                name="Name"
                 placeholder="Mitgliedsname"
-                value={accountName}
-                onChange={(event) => setAccountName(event.target.value)}
+                value={userName}
+                onChange={(event) => setUserName(event.target.value)}
             />
             <Input
                 type="mail"
                 name="email"
                 placeholder="E-Mail"
-                value={accountEmail}
-                onChange={(event) => setAccountEmail(event.target.value)}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
             />
             <Input
                 type="password"
                 name="password"
                 placeholder="Passwort"
-                value={accountPassword}
-                onChange={(event) => setAccountPassword(event.target.value)}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
             />
-            <Button>Registrieren</Button>
+            <Button onClick={() => handleButtonClick({ userName: userName, email: email, password: password })}>
+                Registrieren
+            </Button>
         </Form>
     );
 };
