@@ -4,9 +4,17 @@ const { validateEmail } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema(
     {
-        accountName: { type: String, required: true, index: { unique: true, dropDups: true } },
-        email: { type: String, required: true, lowercase: true, index: { unique: true, dropDups: true } },
-        password: { type: String, required: true },
+        accountName: {
+            type: String,
+            minlength: [3, 'Username must be at least 3 characters.'],
+            maxlength: [20, 'Username must be less than 20 characters.'],
+            required: [true, 'Username cannot be blank.'],
+            trim: true,
+            lowercase: true,
+            index: { unique: true },
+        },
+        email: { type: String, required: true, lowercase: true, index: { unique: true } },
+        password: { type: String, required: true, trim: true },
     },
     {
         collection: 'users',
@@ -23,8 +31,6 @@ userSchema.path('email').validate((email) => {
 
 async function registerUser(userData) {
     const user = new User(userData);
-
-    validateEmail();
 
     user.password = await encrypt(user.password);
 
