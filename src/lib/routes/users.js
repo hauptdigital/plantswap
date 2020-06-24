@@ -9,7 +9,7 @@ router.post('/register', async (request, response) => {
         return response.json(id);
     } catch (error) {
         console.error(error);
-        response.status(400).end('Error');
+        response.status(400).end(error._message);
     }
 });
 
@@ -19,7 +19,7 @@ router.post('/login', async (request, response) => {
         return response.json(isLoggedIn);
     } catch (error) {
         console.error(error);
-        response.status(400).end('Error');
+        response.status(400).end(error._message);
     }
 });
 
