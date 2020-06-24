@@ -7,6 +7,7 @@ async function initDatabase(url) {
     client = await mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        autoIndex: true,
     });
 
     database = mongoose.connection;

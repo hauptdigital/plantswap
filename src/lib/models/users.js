@@ -4,11 +4,15 @@ const { validateEmail } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema(
     {
-        accountName: { type: String, required: true, unique: true },
-        email: { type: String, required: true, unique: true, lowercase: true },
+        accountName: { type: String, required: true, index: { unique: true, dropDups: true } },
+        email: { type: String, required: true, lowercase: true, index: { unique: true, dropDups: true } },
         password: { type: String, required: true },
     },
-    { collection: 'users' },
+    {
+        collection: 'users',
+        timestamps: true,
+        get: (v) => v.toDateString(),
+    },
 );
 
 const User = mongoose.model('User', userSchema);
