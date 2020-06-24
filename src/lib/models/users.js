@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { encrypt } = require('../utils/crypto');
+const { encrypt, comparePasswords } = require('../utils/crypto');
 const { validateEmail } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema(
@@ -29,6 +29,15 @@ userSchema.path('email').validate((email) => {
     return validateEmail(email);
 }, 'E-mail field does not have correct syntax.');
 
+async function loginUser(userInput) {
+    const user = await User.findOne({
+        $or: [{ userName: userInput.userNameOrEmail }, { email: userInput.userNameOrEmail }],
+    });
+
+    const match = await comparePasswords(userInput.password, user.password);
+    return match;
+}
+
 async function registerUser(userData) {
     const user = new User(userData);
 
@@ -40,3 +49,4 @@ async function registerUser(userData) {
 }
 
 module.exports.registerUser = registerUser;
+module.exports.loginUser = loginUser;
