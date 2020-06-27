@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Form from './Form';
 import Input from './Input';
 import Button from './Button';
-import { checkUserCredentials } from '../api/users';
+import { loginUser } from '../api/users';
+import { authContext } from '../contexts/AuthContext';
 
 const Login = ({ title }) => {
+    const { setAuthData, auth } = useContext(authContext);
+
     const [userNameOrEmail, setUserNameOrEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     async function handleButtonClick(user) {
-        const loginCredentialsAreCorrect = await checkUserCredentials(user);
-        if (loginCredentialsAreCorrect) {
-            alert('correct');
+        const token = await loginUser(user);
+        if (token) {
+            setAuthData(token);
         } else {
-            alert('fail');
+            setAuthData(null);
         }
     }
 
     return (
         <Form>
             {title}
+            {auth.token}
             <Input
                 type="text"
                 placeholder="Mitgliedsname oder E-Mail"

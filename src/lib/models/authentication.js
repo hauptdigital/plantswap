@@ -1,6 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 
-async function isLoggedIn(request) {
+async function getUser(request) {
     const token = request.cookies.token;
 
     if (!token) {
@@ -11,4 +11,4 @@ async function isLoggedIn(request) {
     }
 }
 
-module.exports.isLoggedIn = isLoggedIn;
+module.exports.getUser = getUser;

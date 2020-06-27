@@ -1,13 +1,12 @@
 const { Router } = require('express');
-const { isLoggedIn } = require('../models/authentication');
-const jsonwebtoken = require('jsonwebtoken');
+const { getUser } = require('../models/authentication');
 
 const router = Router();
 
-router.get('/check', async (request, response) => {
+router.get('/user', async (request, response) => {
     try {
-        const result = await isLoggedIn(request);
-        return response.json(result);
+        const user = await getUser(request);
+        return response.json(user);
     } catch (error) {
         response.status(400).end(error.message);
     }

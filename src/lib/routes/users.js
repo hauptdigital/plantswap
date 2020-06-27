@@ -22,9 +22,9 @@ router.post('/login', async (request, response) => {
             const token = jsonwebtoken.sign(payload, process.env.SECRET, {
                 expiresIn: 2628000, // 1 month
             });
-            response.cookie('token', token, { expires: new Date(Date.now() + 2628000), httpOnly: true });
+            response.cookie('token', token, { expires: new Date(Date.now() + 2628000), httpOnly: true }).json(token);
         }
-        response.json(loginCredentialsAreCorrect).sendStatus(200);
+        response.json(false);
     } catch (error) {
         console.error(error);
         response.status(400).end(error.message);
