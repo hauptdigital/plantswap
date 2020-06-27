@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const jsonwebtoken = require('jsonwebtoken');
 const { encrypt, comparePasswords } = require('../utils/crypto');
 const { validateEmail } = require('../utils/utils');
 
@@ -29,13 +30,12 @@ userSchema.path('email').validate((email) => {
     return validateEmail(email);
 }, 'E-mail field does not have correct syntax.');
 
-async function loginUser(userInput) {
+async function checkUserCredentials(userInput) {
     const user = await User.findOne({
         $or: [{ userName: userInput.userNameOrEmail }, { email: userInput.userNameOrEmail }],
     });
-
-    const match = await comparePasswords(userInput.password, user.password);
-    return match;
+    const loginCredentialsAreCorrect = user ? await comparePasswords(userInput.password, user.password) : false;
+    return loginCredentialsAreCorrect;
 }
 
 async function registerUser(userData) {
@@ -49,4 +49,4 @@ async function registerUser(userData) {
 }
 
 module.exports.registerUser = registerUser;
-module.exports.loginUser = loginUser;
+module.exports.checkUserCredentials = checkUserCredentials;

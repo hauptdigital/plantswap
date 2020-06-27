@@ -2,15 +2,19 @@ import React from 'react';
 import Form from './Form';
 import Input from './Input';
 import Button from './Button';
-import { loginUser } from '../api/users';
+import { checkUserCredentials } from '../api/users';
 
 const Login = ({ title }) => {
     const [userNameOrEmail, setUserNameOrEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     async function handleButtonClick(user) {
-        const isLoggedIn = await loginUser(user);
-        console.log(isLoggedIn);
+        const loginCredentialsAreCorrect = await checkUserCredentials(user);
+        if (loginCredentialsAreCorrect) {
+            alert('correct');
+        } else {
+            alert('fail');
+        }
     }
 
     return (

@@ -8,7 +8,7 @@ export function registerUser(user) {
     }).then((response) => response.json());
 }
 
-export function loginUser(user) {
+export function checkUserCredentials(user) {
     return fetch(`/api/users/login`, {
         method: 'POST',
         headers: {

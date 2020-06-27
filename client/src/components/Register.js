@@ -11,7 +11,6 @@ const Register = ({ title }) => {
 
     async function handleButtonClick(user) {
         const newUserId = await registerUser(user);
-        console.log(newUserId);
     }
 
     return (
