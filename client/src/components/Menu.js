@@ -9,13 +9,21 @@ const Menu = () => {
         <>
             <Search />
             <p>Kategorien</p>
-            <Link to={'/about'}>Über Plants4Friends</Link>
-            <IsLoggedOut>
-                <Link to={'/register'}>Registrieren / einloggen</Link>
-            </IsLoggedOut>
-            <IsLoggedIn>
-                <Link to={'/Profile'}>Mein Profil</Link>
-            </IsLoggedIn>
+            <ul>
+                <li>
+                    <Link to={'/about'}>Über Plants4Friends</Link>
+                </li>
+                <IsLoggedOut>
+                    <li>
+                        <Link to={'/register'}>Registrieren / einloggen</Link>
+                    </li>
+                </IsLoggedOut>
+                <IsLoggedIn>
+                    <li>
+                        <Link to={'/Profile'}>Mein Profil</Link>
+                    </li>
+                </IsLoggedIn>
+            </ul>
         </>
     );
 };

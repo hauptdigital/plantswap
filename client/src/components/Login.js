@@ -23,7 +23,6 @@ const Login = ({ title }) => {
     return (
         <Form>
             {title}
-            {auth.token}
             <Input
                 type="text"
                 placeholder="Mitgliedsname oder E-Mail"
