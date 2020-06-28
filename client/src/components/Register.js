@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Form from './Form';
 import Input from './Input';
 import Button from './Button';
-import { registerUser } from '../api/users';
+import { registerUser, loginUser } from '../api/users';
+import { authContext } from '../contexts/AuthContext';
 
 const Register = ({ title }) => {
+    const { setAuthData } = useContext(authContext);
     const [userName, setUserName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     async function handleButtonClick(user) {
-        const newUserId = await registerUser(user);
+        await registerUser(user);
+        const token = await loginUser({ userNameOrEmail: userName, password: password });
+        if (token) {
+            setAuthData(token);
+        } else {
+            setAuthData(null);
+        }
     }
 
     return (
