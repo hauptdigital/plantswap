@@ -31,4 +31,14 @@ router.post('/login', async (request, response) => {
     }
 });
 
+router.post('/logout', async (request, response) => {
+    try {
+        response.clearCookie('token');
+        response.send('token cleared');
+    } catch (error) {
+        console.error(error);
+        response.status(400).end(error.message);
+    }
+});
+
 module.exports = router;

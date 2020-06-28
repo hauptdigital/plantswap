@@ -18,6 +18,16 @@ export function loginUser(user) {
     }).then((response) => response.json());
 }
 
+export function logoutUser() {
+    return fetch(`/api/users/logout`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(),
+    }).then((response) => response);
+}
+
 export function getAuthenticatedUser() {
     return fetch(`/api/auth/user`, {
         method: 'GET',

@@ -4,7 +4,7 @@ import { verifyUser } from '../api/users';
 export const authContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({ user: null });
+    const [auth, setAuth] = useState({ token: null, isLoggedIn: false });
 
     const setAuthData = (token) => {
         const isLoggedIn = token ? true : false;
@@ -12,13 +12,12 @@ const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        async function getToken() {
+        async function setLoginStatus() {
             const token = await verifyUser();
-            return token;
+            setAuthData(token);
         }
 
-        const token = getToken();
-        setAuthData(token);
+        setLoginStatus();
     }, []);
 
     return <authContext.Provider value={{ auth, setAuthData }}>{children}</authContext.Provider>;
