@@ -6,10 +6,10 @@ function IsLoggedOut({ children }) {
     const isLoggedIn = auth.isLoggedIn;
 
     if (isLoggedIn) {
-        return <>{children}</>;
+        return <></>;
     }
 
-    return <></>;
+    return <>{children}</>;
 }
 
 export default IsLoggedOut;
