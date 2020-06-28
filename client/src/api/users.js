@@ -26,3 +26,12 @@ export function getAuthenticatedUser() {
         },
     }).then((response) => response.json());
 }
+
+export function verifyUser() {
+    return fetch(`/api/auth/verify`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then((response) => response.json());
+}

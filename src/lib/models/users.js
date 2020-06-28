@@ -48,5 +48,13 @@ async function registerUser(userData) {
     return result._id;
 }
 
+async function isRegisteredUser(user) {
+    const registeredUser = await User.findOne({
+        $or: [{ userName: user }, { email: user }],
+    });
+    return registeredUser ? true : false;
+}
+
 module.exports.registerUser = registerUser;
 module.exports.checkUserCredentials = checkUserCredentials;
+module.exports.isRegisteredUser = isRegisteredUser;
