@@ -6,12 +6,8 @@ const Wrapper = styled.div`
     margin: 0 auto;
 `;
 
-interface ContainerProps {
-    children: any;
-}
-
-function Container(props: ContainerProps) {
+const Container = (props) => {
     return <Wrapper>{props.children}</Wrapper>;
-}
+};
 
 export default Container;

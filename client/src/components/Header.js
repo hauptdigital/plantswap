@@ -7,7 +7,7 @@ const HeaderWrapper = styled.div`
     width: 100%;
 `;
 
-function Header() {
+const Header = () => {
     return (
         <HeaderWrapper>
             <Container>
@@ -16,6 +16,6 @@ function Header() {
             </Container>
         </HeaderWrapper>
     );
-}
+};
 
 export default Header;
