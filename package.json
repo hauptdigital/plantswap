@@ -9,8 +9,8 @@
         "dev-storybook": "cd client && npm run storybook",
         "dev-server": "nodemon server.js",
         "dev": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-client\"",
-        "prod-prebuild": "npm run install && cd client && npm run install",
-        "prod-build": "tsc && cd client && npm run build && npm run build-storybook",
+        "prod-prebuild": "npm install && cd client && npm install",
+        "prod-build": "cd client && npm run build && npm run build-storybook",
         "lint": "eslint '*/**/*.{js}' --quiet"
     },
     "repository": {

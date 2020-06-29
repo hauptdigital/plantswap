@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const { initDatabase } = require('./src/lib/database/database');
 const users = require('./src/lib/routes/users');
@@ -19,6 +20,22 @@ app.use(cookieParser());
 // Setup api endpoints
 app.use('/api/users', users);
 app.use('/api/auth', authentication);
+
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    app.use(express.static(path.join(__dirname, 'client/storybook-static')));
+
+    // Handle React routing, return all requests to React app
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+
+    // Setup Handle React routing, return all requests to React app
+    app.get('/storybook', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client/storybook-static', 'index.html'));
+    });
+}
 
 initDatabase(process.env.DB_URL).then(async () => {
     console.log(`Database ${process.env.DB_URL} is ready`);
