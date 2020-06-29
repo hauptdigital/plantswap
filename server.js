@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const { initDatabase } = require('./src/lib/database/database');
 const users = require('./src/lib/routes/users');
