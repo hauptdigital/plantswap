@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import Form from './Form';
-import Input from './Input';
-import Button from './Button';
+import Form from './elements/Form';
+import Input from './elements/Input';
+import Button from './elements/Button';
 import { loginUser } from '../api/users';
 import { authContext } from '../contexts/AuthContext';
 

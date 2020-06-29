@@ -1,0 +1,17 @@
+import React from 'react';
+import styled from '@emotion/styled';
+import Image from '../elements/Image';
+
+const ProfileImageWrapper = styled.div`
+    max-width: 120px;
+`;
+
+function ProfileImage(props) {
+    return (
+        <ProfileImageWrapper>
+            <Image source={props.source} />
+        </ProfileImageWrapper>
+    );
+}
+
+export default ProfileImage;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-function About(props) {
+function Location(props) {
     return <div>{props.children}</div>;
 }
 
-export default About;
+export default Location;
