@@ -1,20 +1,20 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { verifyUser } from '../api/users';
+import { getAuthenticatedUser } from '../api/auth';
 
 export const authContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({ token: null, isLoggedIn: false });
+    const [auth, setAuth] = useState({ user: null, isLoggedIn: false });
 
-    const setAuthData = (token) => {
-        const isLoggedIn = token ? true : false;
-        setAuth({ token: token, isLoggedIn: isLoggedIn });
+    const setAuthData = (userName) => {
+        const isLoggedIn = userName ? true : false;
+        setAuth({ user: userName, isLoggedIn: isLoggedIn });
     };
 
     useEffect(() => {
         async function setLoginStatus() {
-            const token = await verifyUser();
-            setAuthData(token);
+            const userName = await getAuthenticatedUser();
+            setAuthData(userName);
         }
 
         setLoginStatus();

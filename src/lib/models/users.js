@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const jsonwebtoken = require('jsonwebtoken');
 const { encrypt, comparePasswords } = require('../utils/crypto');
-const { validateEmail } = require('../utils/utils');
+const { isValidEmail } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema(
     {
@@ -16,6 +15,9 @@ const userSchema = new mongoose.Schema(
         },
         email: { type: String, required: true, lowercase: true, index: { unique: true } },
         password: { type: String, required: true, trim: true },
+        country: { type: String },
+        city: { type: String },
+        profileImagePath: { type: String },
     },
     {
         collection: 'users',
@@ -27,7 +29,7 @@ const userSchema = new mongoose.Schema(
 const User = mongoose.model('User', userSchema);
 
 userSchema.path('email').validate((email) => {
-    return validateEmail(email);
+    return isValidEmail(email);
 }, 'E-mail field does not have correct syntax.');
 
 async function checkUserCredentials(userInput) {
@@ -36,6 +38,13 @@ async function checkUserCredentials(userInput) {
     });
     const loginCredentialsAreCorrect = user ? await comparePasswords(userInput.password, user.password) : false;
     return loginCredentialsAreCorrect;
+}
+
+async function getUserNameByLoginCredentials(userNameOrEmail) {
+    const user = await User.findOne({
+        $or: [{ userName: userNameOrEmail }, { email: userNameOrEmail }],
+    });
+    return user.userName;
 }
 
 async function registerUser(userData) {
@@ -48,13 +57,18 @@ async function registerUser(userData) {
     return result._id;
 }
 
-async function isRegisteredUser(user) {
-    const registeredUser = await User.findOne({
-        $or: [{ userName: user }, { email: user }],
+async function getUser(userName) {
+    const user = await User.findOne({ userName: userName }).select({
+        userName: 1,
+        about: 1,
+        city: 1,
+        profileImagePath: 1,
+        _id: 0,
     });
-    return registeredUser ? true : false;
+    return user;
 }
 
 module.exports.registerUser = registerUser;
 module.exports.checkUserCredentials = checkUserCredentials;
-module.exports.isRegisteredUser = isRegisteredUser;
+module.exports.getUser = getUser;
+module.exports.getUserNameByLoginCredentials = getUserNameByLoginCredentials;

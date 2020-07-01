@@ -4,6 +4,7 @@ import Image from '../elements/Image';
 
 const ProfileImageWrapper = styled.div`
     max-width: 120px;
+    padding-top: 12px;
 `;
 
 function ProfileImage(props) {

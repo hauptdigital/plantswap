@@ -6,15 +6,15 @@ import { loginUser } from '../api/users';
 import { authContext } from '../contexts/AuthContext';
 
 const Login = ({ title }) => {
-    const { setAuthData, auth } = useContext(authContext);
+    const { setAuthData } = useContext(authContext);
 
     const [userNameOrEmail, setUserNameOrEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     async function handleButtonClick(user) {
-        const token = await loginUser(user);
-        if (token) {
-            setAuthData(token);
+        const userName = await loginUser(user);
+        if (userName) {
+            setAuthData(userName);
         } else {
             setAuthData(null);
         }

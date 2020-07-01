@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { getUser } from '../../api/users';
 import ProfileImage from './ProfileImage';
 import UserName from './UserName';
 import Location from './Location';
 import About from './About';
-import Products from '../Products/Products';
+import Container from '../Container';
+import { ReactComponent as Loading } from '../../assets/loading.svg';
 
 const ProfileWrapper = styled.div`
     display: flex;
@@ -23,22 +26,40 @@ const ProfileRight = styled.div`
     flex-direction: column;
 `;
 
-const Plants = styled.section``;
-
 function UserProfile(props) {
+    const { userName } = useParams();
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [user, setUser] = React.useState({});
+
+    useEffect(() => {
+        if (userName) {
+            getUser(userName).then((user) => {
+                setUser(user);
+                setIsLoading(false);
+            });
+        }
+    }, [userName]);
+
+    if (isLoading) {
+        return (
+            <Container>
+                <Loading />
+            </Container>
+        );
+    }
+
     return (
         <>
             <ProfileWrapper>
                 <ProfileLeft>
-                    <ProfileImage source="250.png">ProfileImage</ProfileImage>
+                    <ProfileImage source={user.profileImagePath} />
                 </ProfileLeft>
                 <ProfileRight>
-                    <UserName>UserName</UserName>
-                    <Location>Location</Location>
+                    <UserName>{user.userName}</UserName>
+                    <Location>{user.city}</Location>
+                    <About>{user.about}</About>
                 </ProfileRight>
             </ProfileWrapper>
-            <About>About</About>
-            <Products />
         </>
     );
 }

@@ -13,10 +13,12 @@ import { authContext } from './contexts/AuthContext';
 
 function App() {
     const { auth } = useContext(authContext);
+
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyles />
-            {auth.token ? 'Logged in' : 'Logged out'}
+            {auth.user ? 'Logged in' : 'Logged out'}
+            {auth.user}
             <Router>
                 <Header />
                 <Container>
@@ -30,7 +32,7 @@ function App() {
                         <Route path="/register" exact>
                             <RegisterSignIn />
                         </Route>
-                        <Route path="/profile" exact>
+                        <Route path="/profile/:userName" exact>
                             <Profile />
                         </Route>
                     </Switch>

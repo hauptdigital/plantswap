@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { registerUser, checkUserCredentials } = require('../models/users');
+const { getUser, registerUser, checkUserCredentials, getUserNameByLoginCredentials } = require('../models/users');
 const jsonwebtoken = require('jsonwebtoken');
 
 const router = Router();
@@ -18,11 +18,12 @@ router.post('/login', async (request, response) => {
     try {
         const loginCredentialsAreCorrect = await checkUserCredentials(request.body);
         if (loginCredentialsAreCorrect) {
-            const payload = { data: request.body.userNameOrEmail };
+            const userName = await getUserNameByLoginCredentials(request.body.userNameOrEmail);
+            const payload = { data: userName };
             const token = jsonwebtoken.sign(payload, process.env.SECRET, {
                 expiresIn: 2628000, // 1 month
             });
-            response.cookie('token', token, { expires: new Date(Date.now() + 2628000), httpOnly: true }).json(token);
+            response.cookie('token', token, { expires: new Date(Date.now() + 2628000), httpOnly: true }).json(userName);
         }
         response.json(false);
     } catch (error) {
@@ -38,6 +39,17 @@ router.post('/logout', async (request, response) => {
     } catch (error) {
         console.error(error);
         response.status(400).end(error.message);
+    }
+});
+
+router.get('/:userName', async (request, response) => {
+    try {
+        const userName = request.params.userName;
+        const user = await getUser(userName);
+        return response.json(user);
+    } catch (error) {
+        console.error(error);
+        return response.status(404).end('Error');
     }
 });
 
