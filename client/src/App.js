@@ -17,11 +17,11 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyles />
-            {auth.user ? 'Logged in' : 'Logged out'}
-            {auth.user}
             <Router>
                 <Header />
                 <Container>
+                    {auth.user ? 'Logged in as ' : 'Logged out'}
+                    {auth.user}
                     <Switch>
                         <Route path="/" exact>
                             <Shop />
