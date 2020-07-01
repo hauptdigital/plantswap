@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { authContext } from '../../contexts/AuthContext';
 import styled from '@emotion/styled';
 import { getUser } from '../../api/users';
+import { useHistory } from 'react-router-dom';
 import ProfileImage from './ProfileImage';
 import UserName from './UserName';
 import Location from './Location';
@@ -26,19 +28,32 @@ const ProfileRight = styled.div`
     flex-direction: column;
 `;
 
+const EditProfile = styled.button``;
+
 function UserProfile(props) {
     const { userName } = useParams();
+    const history = useHistory();
+    const { auth } = useContext(authContext);
+
     const [isLoading, setIsLoading] = React.useState(true);
     const [user, setUser] = React.useState({});
+    const [isCurrentUser, setIsCurrentUser] = React.useState(false);
+
+    function handleEditProfileClick() {
+        history.push('/my-profile/');
+    }
 
     useEffect(() => {
         if (userName) {
             getUser(userName).then((user) => {
                 setUser(user);
                 setIsLoading(false);
+                if (user.userName === auth.user) {
+                    setIsCurrentUser(true);
+                }
             });
         }
-    }, [userName]);
+    }, [userName, auth.user]);
 
     if (isLoading) {
         return (
@@ -56,6 +71,11 @@ function UserProfile(props) {
                 </ProfileLeft>
                 <ProfileRight>
                     <UserName>{user.userName}</UserName>
+                    {isCurrentUser && (
+                        <EditProfile onClick={handleEditProfileClick} value="Profil editieren">
+                            Profil editieren
+                        </EditProfile>
+                    )}
                     <Location>{user.city}</Location>
                     <About>{user.about}</About>
                 </ProfileRight>
