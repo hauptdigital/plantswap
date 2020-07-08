@@ -1,3 +1,14 @@
+// Users
+
+export function getUser(userName) {
+    return fetch(`/api/users/${userName}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then((response) => response.json());
+}
+
 export function registerUser(user) {
     return fetch(`/api/users/register`, {
         method: 'POST',
@@ -26,22 +37,4 @@ export function logoutUser() {
         },
         body: JSON.stringify(),
     }).then((response) => response);
-}
-
-export function getAuthenticatedUser() {
-    return fetch(`/api/auth/user`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }).then((response) => response.json());
-}
-
-export function verifyUser() {
-    return fetch(`/api/auth/verify`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }).then((response) => response.json());
 }

@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
-import Form from './Form';
-import Input from './Input';
-import Button from './Button';
+import Form from './elements/Form';
+import Input from './elements/Input';
+import Button from './elements/Button';
 import { loginUser } from '../api/users';
 import { authContext } from '../contexts/AuthContext';
 
 const Login = ({ title }) => {
-    const { setAuthData, auth } = useContext(authContext);
+    const { setAuthData } = useContext(authContext);
 
     const [userNameOrEmail, setUserNameOrEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     async function handleButtonClick(user) {
-        const token = await loginUser(user);
-        if (token) {
-            setAuthData(token);
+        const userName = await loginUser(user);
+        if (userName) {
+            setAuthData(userName);
         } else {
             setAuthData(null);
         }

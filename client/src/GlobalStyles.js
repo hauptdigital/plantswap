@@ -19,6 +19,14 @@ function GlobalStyle() {
                         background-color: ${theme.colors.background.primary};
                         color: ${theme.colors.text.primary};
                     }
+                    h1,
+                    h2,
+                    h3,
+                    h4,
+                    h5 {
+                        margin: 0;
+                        font-weight: normal;
+                    }
                 `}
             />
         </>

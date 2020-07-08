@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { authContext } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import IsLoggedIn from './IsLoggedIn';
 import IsLoggedOut from './IsLoggedOut';
 import Search from './Search';
 
 const Menu = () => {
+    const { auth } = useContext(authContext);
+    const userName = auth.user ? auth.user : '';
     return (
         <>
             <Search />
@@ -20,7 +23,7 @@ const Menu = () => {
                 </IsLoggedOut>
                 <IsLoggedIn>
                     <li>
-                        <Link to={'/Profile'}>Mein Profil</Link>
+                        <Link to={'/profile/' + userName}>Mein Profil</Link>
                     </li>
                 </IsLoggedIn>
             </ul>

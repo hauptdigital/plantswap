@@ -1,6 +1,6 @@
-function validateEmail(email) {
+function isValidEmail(email) {
     const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,10})?$/;
     return emailRegex.test(email);
 }
 
-module.exports.validateEmail = validateEmail;
+module.exports.isValidEmail = isValidEmail;

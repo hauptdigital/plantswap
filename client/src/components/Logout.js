@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import Button from './Button';
+import Button from './elements/Button';
 import { authContext } from '../contexts/AuthContext';
-import Form from './Form';
+import Form from './elements/Form';
 import { logoutUser } from '../api/users';
 
 function Logout() {

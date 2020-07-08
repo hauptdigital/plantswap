@@ -1,18 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
-const { isRegisteredUser } = require('./users');
 
-async function getUser(request) {
-    const token = request.cookies.token;
-
-    if (!token) {
-        throw new Error('Unauthorized: No token provided');
-    } else {
-        const decodedPayload = jsonwebtoken.verify(token, process.env.SECRET);
-        return decodedPayload.data;
-    }
-}
-
-async function verifyUser(request) {
+async function getAuthenticatedUser(request) {
     const token = request.cookies.token;
 
     if (!token) {
@@ -20,10 +8,8 @@ async function verifyUser(request) {
     } else {
         const decodedPayload = jsonwebtoken.verify(token, process.env.SECRET);
         const user = decodedPayload.data;
-        const userFoundInDB = await isRegisteredUser(user);
-        return userFoundInDB ? token : null;
+        return user;
     }
 }
 
-module.exports.getUser = getUser;
-module.exports.verifyUser = verifyUser;
+module.exports.getAuthenticatedUser = getAuthenticatedUser;
