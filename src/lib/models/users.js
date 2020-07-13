@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { encrypt, comparePasswords } = require('../utils/crypto');
-const { isValidEmail } = require('../utils/utils');
+const { isValidEmail, generateRandomUrlFriendlyString } = require('../utils/utils');
+const { sendWelcomeMail } = require('./mails');
 
 const userSchema = new mongoose.Schema(
     {
@@ -18,6 +19,8 @@ const userSchema = new mongoose.Schema(
         country: { type: String },
         city: { type: String },
         profileImagePath: { type: String },
+        mailVerificationToken: { type: String, length: [24, 'Email verification token must be of length 24.'] },
+        mailIsVerified: { type: Boolean },
     },
     {
         collection: 'users',
@@ -52,12 +55,20 @@ async function registerUser(userData) {
 
     user.password = await encrypt(user.password);
 
+    // Generate mail verification token
+    user.mailVerificationToken = generateRandomUrlFriendlyString(24);
+    user.mailIsVerified = false;
+
     // Create new user
     const result = await user.save();
+
+    // Send welcome mail
+    sendWelcomeMail(user);
+
     return result._id;
 }
 
-async function getUser(userName) {
+async function getUserPublicProfile(userName) {
     const user = await User.findOne({ userName: userName }).select({
         userName: 1,
         about: 1,
@@ -68,7 +79,15 @@ async function getUser(userName) {
     return user;
 }
 
+async function getUser(userNameOrEmail) {
+    const user = await User.findOne({
+        $or: [{ userName: userNameOrEmail }, { email: userNameOrEmail }],
+    });
+    return user;
+}
+
 module.exports.registerUser = registerUser;
 module.exports.checkUserCredentials = checkUserCredentials;
+module.exports.getUserPublicProfile = getUserPublicProfile;
 module.exports.getUser = getUser;
 module.exports.getUserNameByLoginCredentials = getUserNameByLoginCredentials;

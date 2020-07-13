@@ -44,3 +44,5 @@ initDatabase(process.env.DB_URL).then(async () => {
         console.log(`Express server app listening at http://localhost:${process.env.PORT}`),
     );
 });
+
+console.log(path.join(__dirname));

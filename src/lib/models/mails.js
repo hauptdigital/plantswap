@@ -4,11 +4,10 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 
-const { welcomeMail } = require('../mails/templates/welcomeMail');
-
 dotenv.config();
 
 const sender = '"Marc 🌴" <marc@plantswap.de>';
+const baseUrl = process.env.BASE_URL;
 
 const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
@@ -30,16 +29,26 @@ async function sendMail(userMail, templateName, replacements) {
             const template = handlebars.compile(html);
             // Make replacements in mail
             const htmlToSend = template(replacements);
-            const info = await transporter.sendMail({
+
+            // Use title of mail template as subject
+            titleStartPosition = htmlToSend.indexOf('<title>') + 7;
+            titleEndPosition = htmlToSend.indexOf('</title>');
+            mailSubject = htmlToSend.substr(titleStartPosition, titleEndPosition - titleStartPosition);
+
+            const mailInfo = await transporter.sendMail({
                 from: sender,
                 to: userMail,
-                subject: 'test',
-                text: 'test',
+                subject: mailSubject,
                 html: htmlToSend,
             });
-            return info;
+            return mailInfo;
         }
     });
 }
 
-sendMail('user@doe.de', 'welcomeMail', { username: 'Hans-Peter' });
+async function sendWelcomeMail(user) {
+    const mailVerificationLink = baseUrl + '/token/' + user.mailVerificationToken;
+    sendMail(user.email, 'welcomeMail', { username: user.userName, mailVerificationLink: mailVerificationLink });
+}
+
+module.exports.sendWelcomeMail = sendWelcomeMail;

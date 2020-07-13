@@ -7,7 +7,6 @@ function isValidEmail(email) {
 
 function generateRandomUrlFriendlyString(size) {
     const randomString = crypto.randomBytes(size).toString('hex').slice(0, size);
-    console.log(randomString);
     return randomString;
 }
 

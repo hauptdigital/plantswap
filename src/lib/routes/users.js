@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { getUser, registerUser, checkUserCredentials, getUserNameByLoginCredentials } = require('../models/users');
+const {
+    getUserPublicProfile,
+    registerUser,
+    checkUserCredentials,
+    getUserNameByLoginCredentials,
+} = require('../models/users');
 const jsonwebtoken = require('jsonwebtoken');
 
 const router = Router();
@@ -45,7 +50,7 @@ router.post('/logout', async (request, response) => {
 router.get('/:userName', async (request, response) => {
     try {
         const userName = request.params.userName;
-        const user = await getUser(userName);
+        const user = await getUserPublicProfile(userName);
         return response.json(user);
     } catch (error) {
         console.error(error);
